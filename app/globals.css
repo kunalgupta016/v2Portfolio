@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* globals.css */
+
+html {
+  scroll-behavior: auto; /* Lenis handles this */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #000;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
