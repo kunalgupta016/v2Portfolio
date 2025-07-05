@@ -1,6 +1,8 @@
 "use client"
 import { motion } from "framer-motion"
+import { useState } from "react"
 import ProjectCard from "../components/ProjectCard"
+
 const projects = [
   {
     title: "Bubble-game",
@@ -36,12 +38,27 @@ const projects = [
     tech:["React-native"],
     image: "/product.jpg",
     link: "https://github.com/kunalgupta016/product-biiling-thok-"
+  },
+  {
+    title:"Forest-Cover_Type",
+    description: "A website that predicts forest cover type using machine learning",
+    tech:["Ml","Python","Flask"],
+    image: "/forest.jpeg",
+    link: "https://github.com/kunalgupta016/forest_cover_type"
+  },
+  {
+    title: "Vehicle Price Pridiction",
+    description: "A website that predicts vehicle price using machine learning",
+    tech: ["Ml","Python"],
+    image: "/car.jpeg",
+    link: "https://github.com/kunalgupta016/vehicle_price_prediction"
   }
-
-  // Add more as needed
 ]
 
 export default function Projects() {
+  const [showAll, setShowAll] = useState(false)
+  const visibleProjects = showAll ? projects : projects.slice(0, 3)
+
   return (
     <motion.section
       id="projects"
@@ -62,9 +79,19 @@ export default function Projects() {
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {visibleProjects.map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))}
+        </div>
+
+        {/* 🔘 Show more button */}
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:scale-105 transition-all duration-300"
+          >
+            {showAll ? "Show Less" : "All Projects"}
+          </button>
         </div>
       </div>
     </motion.section>

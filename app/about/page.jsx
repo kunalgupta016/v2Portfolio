@@ -23,19 +23,32 @@ export default function About() {
         </motion.h2>
 
         {/* Description */}
-        <motion.p
+        <motion.span
           className="text-lg md:text-xl text-gray-300 text-center max-w-3xl mx-auto mb-12 leading-relaxed"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          I am Kunnu, a B.Tech Computer Science student with a passion for frontend development,
-          clean UI/UX, and modern web technologies. I have experience building responsive websites
-          and web applications using HTML, CSS, JavaScript, React, and Tailwind CSS. I completed a frontend internship 
-          at Bussibees where I built a Flipkart clone using only HTML and CSS. I'm also diving deep into machine learning, 
-          currently working on a fraud detection model during my internship at Unified Mentor. 
-          I enjoy solving DSA problems in C++ and C, sharing my projects on GitHub, and constantly exploring new areas like AWS, Next.js, and full-stack development.
-        </motion.p>
+          Hi! I'm Kunal Gupta, a Computer Science student passionate about
+          coding, design, and development. I code in <strong>C, C++,</strong>{" "}
+          and <strong>Python</strong>, and I'm actively solving DSA problems on
+          <strong> LeetCode</strong> and <strong>Coding Ninjas</strong> (3⭐ on
+          HackerRank).
+          <br />
+          <br />I build modern web apps using{" "}
+          <strong>HTML, CSS, JavaScript, React</strong>, and love adding life to
+          UI with
+          <strong> GSAP, Framer Motion</strong>, and{" "}
+          <strong>Locomotive.js</strong>. I'm also exploring{" "}
+          <strong>Machine Learning</strong> and{" "}
+          <strong>Backend Development</strong>, and enjoy working with
+          <strong> Numpy, Pandas</strong>, and <strong>Matplotlib</strong> for
+          data handling and visualization.
+          <br />
+          <br />
+          Always learning. Always building. Let's connect and create something
+          awesome!
+        </motion.span>
 
         {/* Resume Button */}
         <motion.div
@@ -69,7 +82,8 @@ export default function About() {
             <div>
               <h4 className="text-lg font-bold">May 2025 - Present</h4>
               <p className="text-gray-400">
-                Machine Learning Internship @ Unified Mentor – Fraud-Detection Model
+                Machine Learning Internship @ Unified Mentor – Fraud-Detection
+                Model
               </p>
             </div>
 

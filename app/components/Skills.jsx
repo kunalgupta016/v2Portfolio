@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useState } from "react"; // 👈 Add this
 
 const skills = [
   {
@@ -90,6 +91,9 @@ const skills = [
 ];
 
 export default function Skills() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleSkills = showAll ? skills : skills.slice(0, 6); // 👈 Show only 6 initially
+
   return (
     <motion.section
       id="skills"
@@ -110,7 +114,7 @@ export default function Skills() {
         </motion.h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-300 overflow-hidden">
-          {skills.map((skill, i) => (
+          {visibleSkills.map((skill, i) => (
             <motion.a
               key={i}
               href={skill.url}
@@ -131,6 +135,16 @@ export default function Skills() {
               {skill.name}
             </motion.a>
           ))}
+        </div>
+
+        {/* 👇 See More / Show Less Button */}
+        <div className="mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:scale-105 transition-all duration-300"
+          >
+            {showAll ? "Show Less" : "See More Skills"}
+          </button>
         </div>
       </div>
     </motion.section>
