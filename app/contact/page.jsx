@@ -27,10 +27,10 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_p1k8gwd", // ✅ Your EmailJS Service ID
-        "template_5o9evxl", // ✅ Your Template ID
+        "service_p1k8gwd",       // ✅ Your EmailJS service ID
+        "template_vd3diow",      // ✅ Your EmailJS template ID
         form.current,
-        "WYCqYT6v-txY7C494" // ✅ Your Public Key
+        "FIYct977dtpgSCuz_"      // ✅ Your EmailJS public key
       )
       .then(
         () => {
@@ -38,7 +38,8 @@ const Contact = () => {
           form.current.reset();
           setLoading(false);
         },
-        () => {
+        (error) => {
+          console.log("❌ Email send failed:", error.text);
           toast.error("❌ An error occurred. Please try again.");
           setLoading(false);
         }
@@ -83,19 +84,14 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-4">Get In Touch</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                    📧
-                  </div>
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">📧</div>
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="text-gray-400">kunalgupta55005@gmail.com</p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                    📍
-                  </div>
+                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">📍</div>
                   <div>
                     <p className="font-semibold">Location</p>
                     <p className="text-gray-400">Jaipur, Rajasthan</p>
@@ -134,14 +130,14 @@ const Contact = () => {
               <div className="space-y-6">
                 <input
                   type="text"
-                  name="user_name"
+                  name="name" // ✅ Must match template var
                   placeholder="Your Name"
                   className="w-full p-4 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <input
                   type="email"
-                  name="user_email"
+                  name="email" // ✅ Must match template var
                   placeholder="Your Email"
                   className="w-full p-4 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
@@ -172,7 +168,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Toast container for success/error */}
+      {/* Toast container */}
       <ToastContainer position="bottom-center" theme="dark" />
     </section>
   );
