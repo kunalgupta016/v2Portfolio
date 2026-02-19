@@ -1,152 +1,192 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react"; // 👈 Add this
 
-const skills = [
+const skillCategories = [
   {
-    name: "HTML",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+    title: "Frontend",
+    skills: [
+      {
+        name: "HTML",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
+      },
+      {
+        name: "CSS",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg",
+      },
+      {
+        name: "JavaScript",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
+      },
+      {
+        name: "React",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
+      },
+    ],
   },
   {
-    name: "CSS",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg",
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+    title: "Backend & Tools",
+    skills: [
+      {
+        name: "Node.js",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
+      },
+      {
+        name: "MongoDB",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
+      },
+      {
+        name: "Git",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
+      },
+    ],
   },
   {
-    name: "JavaScript",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+    title: "Languages",
+    skills: [
+      {
+        name: "C",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg",
+      },
+      {
+        name: "C++",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg",
+      },
+      {
+        name: "Python",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
+      },
+    ],
   },
   {
-    name: "React",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
-    url: "https://reactjs.org/",
-  },
-  {
-    name: "Tailwind CSS",
-    logo: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
-    url: "https://tailwindcss.com/",
-  },
-  {
-    name: "Git",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
-    url: "https://git-scm.com/",
-  },
-  {
-    name: "Framer Motion",
-    logo: "https://seeklogo.com/images/F/framer-motion-logo-DA1E33CAA1-seeklogo.com.png",
-    url: "https://www.framer.com/motion/",
-  },
-  {
-    name: "Node.js",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
-    url: "https://nodejs.org/",
-  },
-  {
-    name: "MongoDB",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
-    url: "https://www.mongodb.com/",
-  },
-  {
-    name: "Python",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
-    url: "https://www.python.org/",
-  },
-  {
-    name: "NumPy",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg",
-    url: "https://numpy.org/",
-  },
-  {
-    name: "Pandas",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg",
-    url: "https://pandas.pydata.org/",
-  },
-  {
-    name: "Matplotlib",
-    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT82xL7k4Jg3wY8lvMswfzZvUyJMhGmv-MaDQ&s",
-    url: "https://matplotlib.org/",
-  },
-  {
-    name: "C",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg",
-    url: "https://en.wikipedia.org/wiki/C_(programming_language)",
-  },
-  {
-    name: "C++",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg",
-    url: "https://isocpp.org/",
-  },
-  {
-    name: "Scikit-Learn",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg",
-    url: "https://scikit-learn.org/",
-  },
-  {
-    name: "Machine Learning",
-    logo: "https://i0.wp.com/www.wi6labs.com/wp-content/uploads/2019/12/Machine-learning-logo-1.png?ssl=1",
-    url: "https://en.wikipedia.org/wiki/Machine_learning",
+    title: "Data & ML",
+    skills: [
+      {
+        name: "NumPy",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg",
+      },
+      {
+        name: "Pandas",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg",
+      },
+      {
+        name: "Scikit-Learn",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg",
+      },
+      {
+        name: "Matplotlib",
+        icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT82xL7k4Jg3wY8lvMswfzZvUyJMhGmv-MaDQ&s",
+      },
+    ],
   },
 ];
 
 export default function Skills() {
-  const [showAll, setShowAll] = useState(false);
-  const visibleSkills = showAll ? skills : skills.slice(0, 6); // 👈 Show only 6 initially
-
   return (
-    <motion.section
-      id="skills"
-      className="py-24 bg-black text-white px-6"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      <div className="max-w-5xl mx-auto text-center">
+    <section id="skills" className="section-padding">
+      <div className="container-main">
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            fontFamily: "var(--font-sora), sans-serif",
+            fontSize: "clamp(2rem, 4vw, 2.75rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+            marginBottom: 48,
+          }}
         >
-          My Skills
+          Skills & <span className="gradient-text">Tools</span>
         </motion.h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-lg font-medium text-gray-300 overflow-hidden">
-          {visibleSkills.map((skill, i) => (
-            <motion.a
-              key={i}
-              href={skill.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center text-center bg-white/5 border border-white/10 rounded-xl py-4 px-6 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 overflow-hidden"
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          {skillCategories.map((category, catIndex) => (
+            <motion.div
+              key={category.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
+              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
             >
-              <img
-                src={skill.logo}
-                alt={skill.name}
-                className="w-12 h-12 mb-2 object-contain"
-                loading="lazy"
-              />
-              {skill.name}
-            </motion.a>
+              <h3
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  marginBottom: 16,
+                }}
+              >
+                {category.title}
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 12,
+                }}
+              >
+                {category.skills.map((skill, i) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.3,
+                      delay: catIndex * 0.1 + i * 0.04,
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      padding: "10px 18px",
+                      borderRadius: "var(--radius-full)",
+                      backgroundColor: "var(--bg-surface)",
+                      border: "1px solid var(--border)",
+                      fontSize: "0.875rem",
+                      color: "var(--text-secondary)",
+                      fontWeight: 500,
+                      cursor: "default",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "var(--accent)";
+                      e.currentTarget.style.color = "var(--text-primary)";
+                      e.currentTarget.style.backgroundColor =
+                        "var(--bg-elevated)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--border)";
+                      e.currentTarget.style.color = "var(--text-secondary)";
+                      e.currentTarget.style.backgroundColor =
+                        "var(--bg-surface)";
+                      e.currentTarget.style.transform = "translateY(0)";
+                    }}
+                  >
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      width={20}
+                      height={20}
+                      style={{ objectFit: "contain" }}
+                      loading="lazy"
+                    />
+                    {skill.name}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
-
-        {/* 👇 See More / Show Less Button */}
-        <div className="mt-10">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:scale-105 transition-all duration-300"
-          >
-            {showAll ? "Show Less" : "See More Skills"}
-          </button>
-        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

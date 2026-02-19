@@ -1,99 +1,162 @@
-"use client"
-import { motion } from "framer-motion"
-import { useState } from "react"
-import ProjectCard from "../components/ProjectCard"
+"use client";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import ProjectCard from "../components/ProjectCard";
 
-const projects = [
+const webApps = [
   {
-    title: "Bubble-game",
-    description: "A unique bubble hit game just for fun",
-    tech: ["HTML", "CSS", "Fonts","Js"],
-    image: "/hubble-bubble.png",
-    link: "https://github.com/kunalgupta016/Bubble-Game"
+    title: "Voice Calculator",
+    description:
+      "A smart calculator that listens to your voice commands and performs calculations hands-free using the Web Speech API.",
+    tech: ["HTML", "CSS", "JavaScript", "Web Speech API"],
+    category: "webapp",
+    link: "https://voicecalc.vercel.app/",
   },
   {
-    title: "Quiz WebApp",
-    description: "A website in which questions of bio, chemistry and physics are asked",
-    tech: ["HTML", "CSS", "JavaScript" , "React" ,"Framer"],
-    image: "/neet.png",
-    link: "https://github.com/kunalgupta016/Neet"
+    title: "AI Resume Builder",
+    description:
+      "An intelligent resume builder that helps users craft professional resumes with AI-powered suggestions and formatting.",
+    tech: ["React", "Node.js", "AI/ML"],
+    category: "webapp",
+    link: "https://cv-boost.vercel.app/",
   },
   {
-    title: "Quote Generator",
-    description: "A website that generates random quotes",
-    tech: ["HTML", "CSS", "JavaScript" , "React" ,"Framer" ,"Axios"],
-    image: "/quote.jfif",
-    link: "https://github.com/kunalgupta016/Quote-Generator"
+    title: "DSA Quest",
+    description:
+      "A gamified platform to learn Data Structures and Algorithms through interactive challenges and visual problem-solving.",
+    tech: ["React", "Framer Motion", "Game Logic"],
+    category: "webapp",
+    link: "https://dsaquest.vercel.app/",
+  },
+];
+
+const webGames = [
+  {
+    title: "Bull Cows Game",
+    description:
+      "A multiplayer number-guessing game where players compete in real-time to crack each other's secret codes.",
+    tech: ["React", "Socket.io", "Node.js"],
+    category: "game",
+    link: "https://cowsbull.vercel.app/",
   },
   {
-    title:"Fraud-Detection ",
-    description: "A website that detects fraud using machine learning",
-    tech: ["HTML", "CSS", "JavaScript" , "React" ,"Framer","Ml","Python"],
-    image: "/fraud.jfif",
-    link: "https://github.com/kunalgupta016/fraud_detection"
+    title: "Stickman Adventure",
+    description:
+      "A side-scrolling adventure game featuring a stickman hero navigating through obstacles and enemies across multiple levels.",
+    tech: ["HTML5 Canvas", "JavaScript", "Phaser.js"],
+    category: "game",
+    link: "https://stickman-adventure.vercel.app/",
   },
   {
-    title:"Product-Billing Mobile App",
-    description: "A mobile app that generates bills for products",
-    tech:["React-native"],
-    image: "/product.jpg",
-    link: "https://github.com/kunalgupta016/product-biiling-thok-"
+    title: "Heads-Up Game",
+    description:
+      "A fun party game where players guess words from clues — inspired by the popular Ellen DeGeneres game show.",
+    tech: ["React", "Framer Motion", "CSS Animations"],
+    category: "game",
+    link: "https://wgk.vercel.app/",
   },
-  {
-    title:"Forest-Cover_Type",
-    description: "A website that predicts forest cover type using machine learning",
-    tech:["Ml","Python","Flask"],
-    image: "/forest.jpeg",
-    link: "https://github.com/kunalgupta016/forest_cover_type"
-  },
-  {
-    title: "Vehicle Price Pridiction",
-    description: "A website that predicts vehicle price using machine learning",
-    tech: ["Ml","Python"],
-    image: "/car.jpeg",
-    link: "https://github.com/kunalgupta016/vehicle_price_prediction"
-  }
-]
+];
+
+const tabs = [
+  { id: "webapps", label: "Web Apps" },
+  { id: "webgames", label: "Web Games" },
+];
 
 export default function Projects() {
-  const [showAll, setShowAll] = useState(false)
-  const visibleProjects = showAll ? projects : projects.slice(0, 3)
+  const [activeTab, setActiveTab] = useState("webapps");
+  const projects = activeTab === "webapps" ? webApps : webGames;
 
   return (
-    <motion.section
-      id="projects"
-      className="min-h-screen px-6 py-24 bg-black text-white"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="section-padding">
+      <div className="container-main">
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            fontFamily: "var(--font-sora), sans-serif",
+            fontSize: "clamp(2rem, 4vw, 2.75rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+            marginBottom: 40,
+          }}
         >
-          Projects
+          My <span className="gradient-text">Projects</span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visibleProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+        {/* Tab Switcher */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          style={{
+            display: "inline-flex",
+            borderRadius: "var(--radius-full)",
+            backgroundColor: "var(--bg-surface)",
+            border: "1px solid var(--border)",
+            padding: 4,
+            marginBottom: 40,
+          }}
+        >
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: "8px 24px",
+                borderRadius: "var(--radius-full)",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                transition: "all 0.3s ease",
+                backgroundColor:
+                  activeTab === tab.id ? "var(--accent)" : "transparent",
+                color:
+                  activeTab === tab.id ? "#0A0A0B" : "var(--text-secondary)",
+              }}
+              onMouseEnter={(e) => {
+                if (activeTab !== tab.id)
+                  e.target.style.color = "var(--text-primary)";
+              }}
+              onMouseLeave={(e) => {
+                if (activeTab !== tab.id)
+                  e.target.style.color = "var(--text-secondary)";
+              }}
+            >
+              {tab.label}
+            </button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* 🔘 Show more button */}
-        <div className="flex justify-center mt-10">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:scale-105 transition-all duration-300"
-          >
-            {showAll ? "Show Less" : "All Projects"}
-          </button>
-        </div>
+        {/* Project Grid */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 20,
+          }}
+          className="projects-grid"
+        >
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </motion.div>
       </div>
-    </motion.section>
-  )
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+    </section>
+  );
 }
