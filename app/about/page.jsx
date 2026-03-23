@@ -146,7 +146,7 @@ export default function About() {
 
   {/* Resume Button */}
   <a
-    href="https://drive.google.com/file/d/1S0xWB3SeR61SDl1eDWINiq4CwGLaN6dK/view"
+    href="https://drive.google.com/file/d/1NVh4FRf_8q4POgFKGgG_0ZD0fz9_tzX5/view"
     target="_blank"
     rel="noopener noreferrer"
     style={{
