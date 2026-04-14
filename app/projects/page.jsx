@@ -21,14 +21,14 @@ const webApps = [
     link: "https://cv-boost.vercel.app/",
   },
   {
-    {
+    
   title: "AI Resume & Interview Assistant",
   description:
     "A full-stack AI-powered platform that evaluates resumes and simulates real interview experiences using LLMs. Features include resume parsing, AI-driven scoring, personalized feedback, and dynamic role-based interview generation with real-time response evaluation.",
   tech: ["React.js", "Node.js", "Express.js", "MongoDB", "LLM APIs"],
   category: "webapp",
-  link: "https://viva-mind-ai.vercel.app/"
-}
+  link: "https://viva-mind-ai.vercel.app/",
+
   },
   {
     title: "DSA Quest",
