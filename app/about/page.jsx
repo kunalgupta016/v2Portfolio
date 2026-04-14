@@ -101,7 +101,7 @@ export default function About() {
     </strong>
     . I have solved{" "}
     <strong style={{ color: "var(--text-primary)" }}>
-      600+ problems on LeetCode
+      800+ problems on LeetCode
     </strong>{" "}
     using <strong style={{ color: "var(--text-primary)" }}>C++</strong>,
     continuously sharpening my problem-solving skills and interview readiness.
@@ -146,7 +146,7 @@ export default function About() {
 
   {/* Resume Button */}
   <a
-    href="https://drive.google.com/file/d/1NVh4FRf_8q4POgFKGgG_0ZD0fz9_tzX5/view"
+    href="https://drive.google.com/file/d/1AVS0p6F7nujGk33QZ74OzobBDPCuXg-y/view"
     target="_blank"
     rel="noopener noreferrer"
     style={{
