@@ -597,150 +597,203 @@ export default function SnakeGame() {
           style={{
             width: "100%",
             maxWidth: canvasWidth,
-            backgroundColor: "rgba(26, 26, 46, 0.9)",
-            border: "1px solid rgba(251, 191, 36, 0.25)",
-            borderRadius: 12,
-            padding: "14px 12px",
-            marginTop: 4,
+            backgroundColor: "rgba(20, 20, 40, 0.95)",
+            border: "1px solid rgba(251, 191, 36, 0.3)",
+            borderRadius: 14,
+            padding: "16px 16px 12px",
+            marginTop: 6,
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(251,191,36,0.08)",
           }}
         >
-          <h3
+          {/* Header */}
+          <div
             style={{
-              color: "#fbbf24",
-              fontSize: "0.95rem",
-              fontWeight: 700,
               textAlign: "center",
-              marginBottom: 10,
+              marginBottom: 12,
+              paddingBottom: 10,
+              borderBottom: "1px solid rgba(251, 191, 36, 0.15)",
             }}
           >
-            🏆 Top 10 Players
-          </h3>
+            <h3
+              style={{
+                color: "#fbbf24",
+                fontSize: "0.95rem",
+                fontWeight: 700,
+                margin: 0,
+                letterSpacing: "0.02em",
+              }}
+            >
+              🏆 Top 10 Players
+            </h3>
+          </div>
 
           {loadingBoard ? (
-            <p
+            <div
               style={{
                 textAlign: "center",
-                color: "#888",
-                fontSize: "0.8rem",
+                padding: "20px 0",
               }}
             >
-              Loading...
-            </p>
-          ) : leaderboard.length === 0 ? (
-            <p
-              style={{
-                textAlign: "center",
-                color: "#666",
-                fontSize: "0.8rem",
-              }}
-            >
-              No scores yet. Be the first!
-            </p>
-          ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table
+              <div
                 style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  fontSize: "0.8rem",
+                  display: "inline-block",
+                  width: 20,
+                  height: 20,
+                  border: "2px solid rgba(251,191,36,0.3)",
+                  borderTopColor: "#fbbf24",
+                  borderRadius: "50%",
+                  animation: "spin 0.8s linear infinite",
+                }}
+              />
+              <p style={{ color: "#888", fontSize: "0.8rem", marginTop: 8 }}>
+                Loading scores...
+              </p>
+              <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            </div>
+          ) : leaderboard.length === 0 ? (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "24px 16px",
+                color: "#666",
+              }}
+            >
+              <span style={{ fontSize: "1.5rem", display: "block", marginBottom: 8 }}>🎯</span>
+              <p style={{ fontSize: "0.82rem", margin: 0 }}>
+                No scores yet. Be the first!
+              </p>
+            </div>
+          ) : (
+            <div
+              data-lenis-prevent
+              style={{
+                maxHeight: 240,
+                overflowY: "auto",
+                overflowX: "hidden",
+                marginRight: -4,
+                paddingRight: 4,
+                scrollbarWidth: "thin",
+                scrollbarColor: "rgba(251,191,36,0.3) transparent",
+              }}
+            >
+              {/* Table header row */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "40px 1fr 60px",
+                  padding: "0 8px 6px",
+                  marginBottom: 4,
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
-                <thead>
-                  <tr
+                <span style={{ fontSize: "0.7rem", color: "#666", fontWeight: 600, textAlign: "center", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Rank
+                </span>
+                <span style={{ fontSize: "0.7rem", color: "#666", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Player
+                </span>
+                <span style={{ fontSize: "0.7rem", color: "#666", fontWeight: 600, textAlign: "right", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Score
+                </span>
+              </div>
+
+              {/* Player rows */}
+              {leaderboard.map((entry, i) => {
+                const isTop3 = i < 3;
+                const rankColors = ["#fbbf24", "#c0c0c0", "#cd7f32"];
+                const rankBgColors = [
+                  "rgba(251,191,36,0.1)",
+                  "rgba(192,192,192,0.08)",
+                  "rgba(205,127,50,0.08)",
+                ];
+                const medals = ["🥇", "🥈", "🥉"];
+
+                return (
+                  <div
+                    key={entry._id || i}
                     style={{
-                      borderBottom: "1px solid rgba(255,255,255,0.1)",
+                      display: "grid",
+                      gridTemplateColumns: "40px 1fr 60px",
+                      alignItems: "center",
+                      padding: "8px 8px",
+                      borderRadius: 8,
+                      marginBottom: 2,
+                      backgroundColor: isTop3
+                        ? rankBgColors[i]
+                        : i % 2 === 1
+                        ? "rgba(255,255,255,0.02)"
+                        : "transparent",
+                      transition: "background-color 0.15s ease",
+                      cursor: "default",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isTop3)
+                        e.currentTarget.style.backgroundColor =
+                          "rgba(255,255,255,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isTop3)
+                        e.currentTarget.style.backgroundColor =
+                          i % 2 === 1
+                            ? "rgba(255,255,255,0.02)"
+                            : "transparent";
                     }}
                   >
-                    <th
+                    {/* Rank */}
+                    <div style={{ textAlign: "center" }}>
+                      {isTop3 ? (
+                        <span style={{ fontSize: "1rem" }}>{medals[i]}</span>
+                      ) : (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 22,
+                            height: 22,
+                            borderRadius: 6,
+                            backgroundColor: "rgba(255,255,255,0.06)",
+                            color: "#888",
+                            fontSize: "0.72rem",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {i + 1}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Player name */}
+                    <span
                       style={{
-                        padding: "6px 8px",
-                        textAlign: "center",
-                        color: "#888",
-                        fontWeight: 600,
-                        width: 36,
+                        color: isTop3 ? "#f5f5f5" : "#d1d5db",
+                        fontWeight: isTop3 ? 600 : 400,
+                        fontSize: "0.82rem",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        paddingRight: 8,
                       }}
                     >
-                      #
-                    </th>
-                    <th
+                      {entry.name}
+                    </span>
+
+                    {/* Score */}
+                    <span
                       style={{
-                        padding: "6px 8px",
-                        textAlign: "left",
-                        color: "#888",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Player
-                    </th>
-                    <th
-                      style={{
-                        padding: "6px 8px",
                         textAlign: "right",
-                        color: "#888",
-                        fontWeight: 600,
+                        color: isTop3 ? rankColors[i] : "#4ade80",
+                        fontWeight: 700,
+                        fontSize: "0.82rem",
+                        fontFamily: "'SF Mono', 'Cascadia Code', 'Consolas', monospace",
                       }}
                     >
-                      Score
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leaderboard.map((entry, i) => (
-                    <tr
-                      key={entry._id || i}
-                      style={{
-                        borderBottom: "1px solid rgba(255,255,255,0.05)",
-                        transition: "background 0.15s",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.background =
-                          "rgba(255,255,255,0.03)")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.background = "transparent")
-                      }
-                    >
-                      <td
-                        style={{
-                          padding: "7px 8px",
-                          textAlign: "center",
-                          color:
-                            i === 0
-                              ? "#fbbf24"
-                              : i === 1
-                              ? "#d1d5db"
-                              : i === 2
-                              ? "#d97706"
-                              : "#888",
-                          fontWeight: i < 3 ? 700 : 400,
-                        }}
-                      >
-                        {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}
-                      </td>
-                      <td
-                        style={{
-                          padding: "7px 8px",
-                          color: "#e5e7eb",
-                          fontWeight: i < 3 ? 600 : 400,
-                        }}
-                      >
-                        {entry.name}
-                      </td>
-                      <td
-                        style={{
-                          padding: "7px 8px",
-                          textAlign: "right",
-                          color: "#4ade80",
-                          fontWeight: 600,
-                          fontFamily: "monospace",
-                        }}
-                      >
-                        {entry.score}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      {entry.score}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

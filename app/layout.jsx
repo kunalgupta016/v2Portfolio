@@ -44,6 +44,17 @@ export default function RootLayout({ children }) {
     return () => window.removeEventListener("keydown", handleKeyDetection);
   }, [inputBuffer]);
 
+  useEffect(() => {
+    if (showGame) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showGame]);
+
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
       <head>
@@ -130,12 +141,10 @@ export default function RootLayout({ children }) {
             onClick={(e) => {
               if (e.target === e.currentTarget) setShowGame(false);
             }}
+            data-lenis-prevent
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
+              inset: 0,
               backgroundColor: "rgba(0,0,0,0.92)",
               zIndex: 99999,
               display: "flex",
@@ -144,36 +153,40 @@ export default function RootLayout({ children }) {
               padding: 16,
             }}
           >
-            {/* Modal Container */}
+            {/* Modal Container — scrolls internally */}
             <div
+              data-lenis-prevent
               style={{
                 position: "relative",
                 backgroundColor: "#1a1a2e",
-                padding: "24px 20px",
                 borderRadius: 16,
                 border: "2px solid rgba(74, 222, 128, 0.4)",
                 maxWidth: "95vw",
-                maxHeight: "95vh",
-                overflow: "auto",
+                maxHeight: "92vh",
+                overflowY: "auto",
+                overflowX: "hidden",
                 boxShadow: "0 0 40px rgba(74, 222, 128, 0.15)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              {/* Close Button */}
+              {/* Sticky close button */}
               <button
                 onClick={() => setShowGame(false)}
                 style={{
-                  position: "absolute",
-                  top: 8,
-                  right: 12,
-                  background: "none",
+                  position: "sticky",
+                  top: 0,
+                  alignSelf: "flex-end",
+                  background: "rgba(26, 26, 46, 0.9)",
                   border: "none",
                   color: "#aaa",
                   fontSize: "1.4rem",
                   cursor: "pointer",
-                  padding: 4,
+                  padding: "8px 12px",
                   lineHeight: 1,
                   transition: "color 0.2s",
-                  zIndex: 1,
+                  zIndex: 2,
+                  borderRadius: "0 14px 0 8px",
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#aaa")}
@@ -181,17 +194,20 @@ export default function RootLayout({ children }) {
                 ✕
               </button>
 
-              <SnakeGame />
+              {/* Content area with padding */}
+              <div style={{ padding: "0 20px 20px" }}>
+                <SnakeGame />
 
-              <div
-                style={{
-                  textAlign: "center",
-                  color: "#555",
-                  marginTop: 8,
-                  fontSize: "0.75rem",
-                }}
-              >
-                Tap ✕ or press Esc to close
+                <div
+                  style={{
+                    textAlign: "center",
+                    color: "#555",
+                    marginTop: 8,
+                    fontSize: "0.75rem",
+                  }}
+                >
+                  Tap ✕ or press Esc to close
+                </div>
               </div>
             </div>
           </div>
