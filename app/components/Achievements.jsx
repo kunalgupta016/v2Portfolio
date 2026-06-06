@@ -9,9 +9,9 @@ const achievements = [
   },
   {
     icon: "🏆",
-    title: "600+ LeetCode Problems",
+    title: "850+ LeetCode Problems",
     description:
-      "Solved 600+ DSA problems in C++, consistently improving problem-solving and algorithmic thinking.",
+      "Solved 850+ DSA problems in C++, consistently improving problem-solving and algorithmic thinking.",
   },
   {
     icon: "⭐",
@@ -39,9 +39,9 @@ const achievements = [
   },
   {
     icon: "🎮",
-    title: "Game Developer",
+    title: "Web Game Developer",
     description:
-      "Designed and shipped multiple web games including multiplayer Bull Cows and Stickman Adventure.",
+      "Designed and shipped multiple web games including Snake Game, multiplayer Bull Cows, and Stickman Adventure.",
   },
 ];
 

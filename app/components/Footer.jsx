@@ -44,6 +44,24 @@ export default function Footer() {
           }}
         >
           © {new Date().getFullYear()} Kunal Gupta. Built with ❤️
+          <span
+            style={{
+              display: "block",
+              marginTop: 4,
+              fontSize: "0.75rem",
+              color: "var(--text-muted)",
+              opacity: 0.6,
+            }}
+          >
+            💡 Psst… try typing <kbd style={{ 
+              backgroundColor: "var(--bg-elevated)", 
+              padding: "1px 6px", 
+              borderRadius: 4, 
+              border: "1px solid var(--border)",
+              fontSize: "0.7rem",
+              fontFamily: "monospace",
+            }}>game</kbd> anywhere on the site
+          </span>
         </p>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
           {footerLinks.map((item) => (

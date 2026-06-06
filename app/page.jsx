@@ -8,13 +8,13 @@ import Skills from "./components/Skills";
 import Achievements from "./components/Achievements";
 import SectionDivider from "./components/SectionDivider";
 import LoadingScreen from "./components/LoadingScreen";
-import CustomCursor from "./components/CustomCursor";
+
 
 export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <CustomCursor />
+
       <Navbar />
       <main>
         <HeroSection />

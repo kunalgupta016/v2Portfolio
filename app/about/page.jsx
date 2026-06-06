@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import TiltCard from "../components/TiltCard";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -11,6 +12,13 @@ const fadeUp = {
 };
 
 const timeline = [
+  {
+    period: "Mar 2026 - May 2026",
+    title: "Volunteer Full Stack Developer",
+    org: "Vishwashi Sangati",
+    detail:
+      "Rebuilt the organization's website from scratch with a modern, responsive design and full-stack architecture.",
+  },
   {
     period: "Dec 2025 - Dec 2025",
     title: "Frontend Developer",
@@ -79,6 +87,15 @@ export default function About() {
   whileInView="visible"
   viewport={{ once: true }}
 >
+  <TiltCard
+    className="glass-card"
+    tiltIntensity={8}
+    scale={1.015}
+    style={{
+      padding: 32,
+      borderRadius: "var(--radius-lg)",
+    }}
+  >
   <p
     style={{
       fontSize: "1.05rem",
@@ -119,7 +136,7 @@ export default function About() {
     <strong style={{ color: "var(--text-primary)" }}>
       HTML, CSS, JavaScript, and React
     </strong>
-    , and I’m expanding my expertise across the full stack by working on{" "}
+    , and I'm expanding my expertise across the full stack by working on{" "}
     <strong style={{ color: "var(--text-primary)" }}>
       Backend Development
     </strong>{" "}
@@ -172,6 +189,7 @@ export default function About() {
   >
     📄 View Resume
   </a>
+  </TiltCard>
 </motion.div>
 
 
@@ -183,6 +201,15 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true }}
           >
+            <TiltCard
+              className="glass-card"
+              tiltIntensity={6}
+              scale={1.01}
+              style={{
+                padding: 32,
+                borderRadius: "var(--radius-lg)",
+              }}
+            >
             <h3
               style={{
                 fontFamily: "var(--font-sora), sans-serif",
@@ -272,6 +299,7 @@ export default function About() {
                 ))}
               </div>
             </div>
+            </TiltCard>
           </motion.div>
         </div>
       </div>

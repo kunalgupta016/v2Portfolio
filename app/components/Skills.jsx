@@ -42,6 +42,10 @@ const skillCategories = [
         name: "Git",
         icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
       },
+      {
+        name: "Postman",
+        icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
+      },
     ],
   },
   {
@@ -58,6 +62,10 @@ const skillCategories = [
       {
         name: "Python",
         icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
+      },
+      {
+        name: "Java",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
       },
     ],
   },
@@ -79,6 +87,15 @@ const skillCategories = [
       {
         name: "Matplotlib",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT82xL7k4Jg3wY8lvMswfzZvUyJMhGmv-MaDQ&s",
+      },
+    ],
+  },
+  {
+    title: "Testing",
+    skills: [
+      {
+        name: "Basics of Testing",
+        icon: "https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg",
       },
     ],
   },
