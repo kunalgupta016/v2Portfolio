@@ -13,6 +13,12 @@ const fadeUp = {
 
 const timeline = [
   {
+    period:"July 2026 - Present",
+    title:"Quantum Engineer and Full Stack Role",
+    org:"Defence Research and Development Organisation (DRDO)",
+    detail:"Develop the website and learn the quantum mechanics"
+  },
+  {
     period: "Mar 2026 - May 2026",
     title: "Volunteer Full Stack Developer",
     org: "Vishwashi Sangati",

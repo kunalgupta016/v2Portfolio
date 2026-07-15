@@ -43,7 +43,7 @@ export default function Footer() {
             color: "var(--text-muted)",
           }}
         >
-          © {new Date().getFullYear()} Kunal Gupta. Built with ❤️
+          © {new Date().getFullYear()} Kunal Gupta.
           <span
             style={{
               display: "block",
