@@ -5,6 +5,14 @@ import ProjectCard from "../components/ProjectCard";
 
 const webApps = [
   {
+    title: "MusicAdda",
+    description:
+      "A real-time collaborative YouTube listening room where multiple users join a room and listen to songs together by dropping YouTube links. Features synchronized playback, host handoff, queue voting, live chat, reactions, and history replay — powered by Socket.io for low-latency state sync.",
+    tech: ["React", "Vite", "Express", "Socket.io", "MongoDB"],
+    category: "webapp",
+    link: "https://kunalmusic.vercel.app",
+  },
+  {
     title: "Voice Calculator",
     description:
       "A smart calculator that listens to your voice commands and performs calculations hands-free using the Web Speech API.",

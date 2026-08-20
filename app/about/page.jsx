@@ -124,7 +124,7 @@ export default function About() {
     </strong>
     . I have solved{" "}
     <strong style={{ color: "var(--text-primary)" }}>
-      800+ problems on LeetCode
+      900+ problems on LeetCode
     </strong>{" "}
     using <strong style={{ color: "var(--text-primary)" }}>C++</strong>,
     continuously sharpening my problem-solving skills and interview readiness.
