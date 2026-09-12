@@ -1,109 +1,237 @@
 "use client";
 import { motion } from "framer-motion";
-import TiltCard from "./TiltCard";
+import CurtainsThumbnail from "./CurtainsThumbnail";
 
-export default function ProjectCard({ project }) {
+// Rendered as a full-width editorial row (image one side, details the
+// other, alternating by index) rather than a grid tile — closer to a
+// catalog/gallery listing than a generic card grid.
+export default function ProjectCard({ project, index = 0, onOpenDetails }) {
+  const thumbnail = project.images?.[0];
+  const reversed = index % 2 === 1;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="glass-card project-row"
+      style={{
+        display: "flex",
+        flexDirection: reversed ? "row-reverse" : "row",
+        alignItems: "center",
+        gap: 40,
+        padding: 32,
+      }}
     >
-      <TiltCard
-        className="glass-card"
-        tiltIntensity={10}
-        scale={1.02}
-        style={{
-          padding: 24,
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-          cursor: "default",
-          height: "100%",
-        }}
-      >
-        {/* Header: Category + Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span
+      {/* Media */}
+      <div className="project-row-media" style={{ flex: "0 0 44%" }}>
+        {thumbnail ? (
+          <div
             style={{
-              fontSize: "1.25rem",
+              position: "relative",
+              width: "100%",
+              aspectRatio: "16 / 10",
+              borderRadius: "var(--radius-md)",
+              overflow: "hidden",
+              border: "1px solid var(--border)",
             }}
           >
-            {project.category === "webapp" ? "🌐" : "🎮"}
-          </span>
-          <h3
+            <CurtainsThumbnail
+              src={thumbnail}
+              alt={`${project.title} screenshot`}
+            />
+            {onOpenDetails && (
+              <button
+                onClick={onOpenDetails}
+                aria-label={`View details for ${project.title}`}
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  width: 34,
+                  height: 34,
+                  borderRadius: "50%",
+                  border: "1px solid rgba(244,239,228,0.25)",
+                  background: "rgba(13,12,10,0.6)",
+                  backdropFilter: "blur(4px)",
+                  color: "var(--text-primary)",
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                  zIndex: 2,
+                }}
+              >
+                ⤢
+              </button>
+            )}
+          </div>
+        ) : (
+          <div
             style={{
-              fontFamily: "var(--font-sora), sans-serif",
-              fontSize: "1.15rem",
-              fontWeight: 600,
-              color: "var(--text-primary)",
+              width: "100%",
+              aspectRatio: "16 / 10",
+              borderRadius: "var(--radius-md)",
+              border: "1px dashed var(--border)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "2rem",
             }}
           >
-            {project.title}
-          </h3>
-        </div>
+            🖥️
+          </div>
+        )}
+      </div>
 
-        {/* Description */}
-        <p
+      {/* Details */}
+      <div style={{ flex: 1, position: "relative", minWidth: 0 }}>
+        <span
+          aria-hidden
           style={{
-            fontSize: "0.9rem",
-            color: "var(--text-secondary)",
-            lineHeight: 1.6,
-            flex: 1,
+            position: "absolute",
+            top: -36,
+            [reversed ? "right" : "left"]: 0,
+            fontFamily: "var(--font-serif), serif",
+            fontSize: "5rem",
+            fontWeight: 600,
+            color: "var(--border)",
+            lineHeight: 1,
+            userSelect: "none",
+            zIndex: 0,
           }}
+          className="project-row-index"
         >
-          {project.description}
-        </p>
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-        {/* Tech Tags */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {project.tech.map((tech) => (
-            <span
-              key={tech}
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <span style={{ fontSize: "1.1rem" }}>
+              {project.type === "download" ? "🖥️" : "🌐"}
+            </span>
+            <h3
               style={{
-                fontSize: "0.75rem",
-                padding: "4px 12px",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "var(--accent-dim)",
-                color: "var(--accent)",
-                fontWeight: 500,
+                fontFamily: "var(--font-serif), serif",
+                fontSize: "1.5rem",
+                fontWeight: 600,
+                color: "var(--text-primary)",
               }}
             >
-              {tech}
-            </span>
-          ))}
-        </div>
+              {project.title}
+            </h3>
+          </div>
 
-        {/* Link */}
-        {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
+          <p
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: "0.85rem",
-              color: "var(--text-muted)",
-              fontWeight: 500,
-              transition: "color 0.2s, gap 0.2s",
-              width: "fit-content",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "var(--accent)";
-              e.currentTarget.style.gap = "10px";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "var(--text-muted)";
-              e.currentTarget.style.gap = "6px";
+              fontSize: "0.95rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.7,
+              marginBottom: 20,
             }}
           >
-            View Project <span>→</span>
-          </a>
-        )}
-      </TiltCard>
+            {project.description}
+          </p>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
+            {project.tech.map((tech) => (
+              <span
+                key={tech}
+                style={{
+                  fontSize: "0.75rem",
+                  padding: "4px 12px",
+                  borderRadius: "var(--radius-full)",
+                  backgroundColor: "var(--accent-dim)",
+                  color: "var(--accent)",
+                  fontWeight: 500,
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {project.type === "download" ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <a
+                href={project.downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 16px",
+                  borderRadius: "var(--radius-full)",
+                  border: "1px solid var(--border)",
+                  fontSize: "0.85rem",
+                  color: "var(--text-primary)",
+                  fontWeight: 500,
+                  transition: "border-color 0.2s, color 0.2s",
+                  width: "fit-content",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--accent)";
+                  e.currentTarget.style.color = "var(--accent)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.color = "var(--text-primary)";
+                }}
+              >
+                ⬇ Download for {project.os}
+              </a>
+              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+                {project.fileName} · ~{project.fileSizeMB}MB · no live demo, runs locally
+              </span>
+            </div>
+          ) : (
+            project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  fontSize: "0.85rem",
+                  color: "var(--text-muted)",
+                  fontWeight: 500,
+                  transition: "color 0.2s, gap 0.2s",
+                  width: "fit-content",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--accent)";
+                  e.currentTarget.style.gap = "10px";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--text-muted)";
+                  e.currentTarget.style.gap = "6px";
+                }}
+              >
+                View Project <span>→</span>
+              </a>
+            )
+          )}
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @media (max-width: 780px) {
+          .project-row {
+            flex-direction: column !important;
+            padding: 20px !important;
+            gap: 24px !important;
+          }
+          .project-row-media {
+            flex: 1 1 auto !important;
+            width: 100%;
+          }
+          .project-row-index {
+            display: none;
+          }
+        }
+      `}</style>
     </motion.div>
   );
 }

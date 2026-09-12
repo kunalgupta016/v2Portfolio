@@ -241,32 +241,36 @@ export default function SnakeGame() {
     setPlayerName("");
   };
 
-  // Leaderboard: fetch top 10
-  const fetchLeaderboard = async () => {
-    setLoadingBoard(true);
+  // Leaderboard: local top 10, stored in this browser only (no backend)
+  const LEADERBOARD_KEY = "snake-leaderboard";
+
+  const readLocalLeaderboard = () => {
     try {
-      const res = await fetch("/api/leaderboard");
-      const data = await res.json();
-      setLeaderboard(data);
+      const raw = window.localStorage.getItem(LEADERBOARD_KEY);
+      return raw ? JSON.parse(raw) : [];
     } catch (err) {
-      console.error("Failed to fetch leaderboard:", err);
-    } finally {
-      setLoadingBoard(false);
+      console.error("Failed to read leaderboard:", err);
+      return [];
     }
   };
 
-  // Leaderboard: submit score
-  const submitScore = async () => {
+  const fetchLeaderboard = () => {
+    setLoadingBoard(true);
+    setLeaderboard(readLocalLeaderboard());
+    setLoadingBoard(false);
+  };
+
+  const submitScore = () => {
     if (!playerName.trim() || submitting) return;
     setSubmitting(true);
     try {
-      await fetch("/api/leaderboard", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: playerName.trim(), score }),
-      });
+      const entry = { name: playerName.trim().substring(0, 20), score };
+      const updated = [...readLocalLeaderboard(), entry]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+      window.localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(updated));
       setSubmitted(true);
-      fetchLeaderboard();
+      setLeaderboard(updated);
     } catch (err) {
       console.error("Failed to submit score:", err);
     } finally {

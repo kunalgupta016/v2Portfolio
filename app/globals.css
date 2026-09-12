@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
-/* ===== DESIGN TOKENS ===== */
+/* ===== DESIGN TOKENS =====
+   Warm-black "gallery" palette with a single bold accent — a deliberate
+   move away from the generic dark-purple SaaS look toward the restrained,
+   editorial feel of Awwwards-style portfolios (Fraunces display serif +
+   mono eyebrow labels + one confident accent color). */
 :root {
-  --bg: #0A0A0B;
-  --bg-surface: #141416;
-  --bg-elevated: #1A1A1E;
-  --border: #1E1E22;
-  --border-hover: #2A2A30;
+  --bg: #0d0c0a;
+  --bg-surface: #17150f;
+  --bg-elevated: #211e17;
+  --border: #2c2820;
+  --border-hover: #423b2d;
 
-  --text-primary: #FAFAF9;
-  --text-secondary: #A1A1AA;
-  --text-muted: #71717A;
+  --text-primary: #f4efe4;
+  --text-secondary: #b3aa98;
+  --text-muted: #7d7566;
 
-  --accent: #A78BFA;
-  --accent-hover: #C4B5FD;
-  --accent-dim: rgba(167, 139, 250, 0.1);
-  --accent-glow: rgba(167, 139, 250, 0.15);
+  --accent: #ff5a36;
+  --accent-hover: #ff8058;
+  --accent-dim: rgba(255, 90, 54, 0.12);
+  --accent-glow: rgba(255, 90, 54, 0.2);
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,6 +87,41 @@ body::after {
   color: var(--accent-hover);
 }
 
+/* ===== ACCESSIBILITY ===== */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 16px;
+  z-index: 10000;
+  background: var(--accent);
+  color: #0a0a0b;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeUp {
   from {
@@ -133,41 +172,97 @@ body::after {
 
 /* ===== UTILITY CLASSES ===== */
 .glass-card {
-  background: var(--bg-surface);
+  position: relative;
+  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-surface) 100%);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition), transform var(--transition);
+  overflow: hidden;
+}
+
+/* A faint warm glow in the corner + hairline top highlight, so cards read
+   as lit objects rather than flat color fills. */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% -10%, var(--accent-dim) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 239, 228, 0.15), transparent);
+  pointer-events: none;
 }
 
 .glass-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Alternating section backgrounds — a subtle tonal shift between
+   sections so the page reads as a sequence of distinct spaces rather
+   than one flat surface repeated five times. */
+.section-tone-a {
+  background-color: var(--bg);
+}
+
+.section-tone-b {
+  background-color: var(--bg-surface);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-hover) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .section-padding {
-  padding: 120px 24px;
+  padding: 140px 24px;
 }
 
 @media (max-width: 768px) {
   .section-padding {
-    padding: 80px 16px;
+    padding: 88px 20px;
   }
 }
 
 .glow-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 12px var(--accent-glow), 0 0 24px var(--accent-dim);
+}
+
+/* Small mono uppercase label used above every section heading — the
+   "eyebrow" tag that gives the layout an editorial, catalogued feel. */
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
 }
 
 /* ===== LINK STYLES ===== */
@@ -178,7 +273,7 @@ a {
 
 /* ===== RESPONSIVE CONTAINER ===== */
 .container-main {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
   width: 100%;
 }

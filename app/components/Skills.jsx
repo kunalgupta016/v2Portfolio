@@ -1,125 +1,24 @@
 "use client";
 import { motion } from "framer-motion";
-
-const skillCategories = [
-  {
-    title: "Frontend",
-    skills: [
-      {
-        name: "HTML",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
-      },
-      {
-        name: "CSS",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg",
-      },
-      {
-        name: "JavaScript",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
-      },
-      {
-        name: "React",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
-      },
-      {
-        name: "Tailwind CSS",
-        icon: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
-      },
-    ],
-  },
-  {
-    title: "Backend & Tools",
-    skills: [
-      {
-        name: "Node.js",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
-      },
-      {
-        name: "MongoDB",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
-      },
-      {
-        name: "Git",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
-      },
-      {
-        name: "Postman",
-        icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
-      },
-    ],
-  },
-  {
-    title: "Languages",
-    skills: [
-      {
-        name: "C",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg",
-      },
-      {
-        name: "C++",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg",
-      },
-      {
-        name: "Python",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
-      },
-      {
-        name: "Java",
-        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
-      },
-    ],
-  },
-  {
-    title: "Data & ML",
-    skills: [
-      {
-        name: "NumPy",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg",
-      },
-      {
-        name: "Pandas",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg",
-      },
-      {
-        name: "Scikit-Learn",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg",
-      },
-      {
-        name: "Matplotlib",
-        icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT82xL7k4Jg3wY8lvMswfzZvUyJMhGmv-MaDQ&s",
-      },
-    ],
-  },
-  {
-    title: "Testing",
-    skills: [
-      {
-        name: "Basics of Testing",
-        icon: "https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg",
-      },
-    ],
-  },
-];
+import RevealHeading from "./RevealHeading";
+import { skillCategories } from "../../lib/data/skills";
 
 export default function Skills() {
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding section-tone-b">
       <div className="container-main">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+        <RevealHeading
+          eyebrow="( 02 ) — Capabilities"
+          text="Skills &"
+          accent="Tools"
           style={{
-            fontFamily: "var(--font-sora), sans-serif",
+            fontFamily: "var(--font-serif), sans-serif",
             fontSize: "clamp(2rem, 4vw, 2.75rem)",
             fontWeight: 700,
             letterSpacing: "-0.02em",
             marginBottom: 48,
           }}
-        >
-          Skills & <span className="gradient-text">Tools</span>
-        </motion.h2>
+        />
 
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
           {skillCategories.map((category, catIndex) => (
@@ -188,14 +87,27 @@ export default function Skills() {
                       e.currentTarget.style.transform = "translateY(0)";
                     }}
                   >
-                    <img
-                      src={skill.icon}
-                      alt={skill.name}
-                      width={20}
-                      height={20}
-                      style={{ objectFit: "contain" }}
-                      loading="lazy"
-                    />
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 20,
+                        height: 20,
+                        borderRadius: skill.iconBg ? "50%" : 0,
+                        backgroundColor: skill.iconBg || "transparent",
+                        padding: skill.iconBg ? 2 : 0,
+                      }}
+                    >
+                      <img
+                        src={skill.icon}
+                        alt={skill.name}
+                        width={skill.iconBg ? 14 : 20}
+                        height={skill.iconBg ? 14 : 20}
+                        style={{ objectFit: "contain" }}
+                        loading="lazy"
+                      />
+                    </span>
                     {skill.name}
                   </motion.div>
                 ))}

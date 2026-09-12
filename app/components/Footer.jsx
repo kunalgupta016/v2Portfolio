@@ -1,23 +1,16 @@
 "use client";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { socials } from "../../lib/data/profile";
 
-const footerLinks = [
-  {
-    icon: <FaGithub size={16} />,
-    href: "https://github.com/kunalgupta016",
-    label: "GitHub",
-  },
-  {
-    icon: <FaLinkedinIn size={16} />,
-    href: "https://www.linkedin.com/in/kunal-gupta-1b6065291/",
-    label: "LinkedIn",
-  },
-  {
-    icon: <FaXTwitter size={16} />,
-    href: "https://x.com/KunalGupta75260",
-    label: "Twitter",
-  },
-];
+const footerIcons = {
+  github: <FaGithub size={16} />,
+  linkedin: <FaLinkedinIn size={16} />,
+  twitter: <FaXTwitter size={16} />,
+};
+
+const footerLinks = socials
+  .filter((s) => footerIcons[s.icon])
+  .map((s) => ({ icon: footerIcons[s.icon], href: s.href, label: s.label }));
 
 export default function Footer() {
   return (

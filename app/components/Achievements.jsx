@@ -1,49 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-
-const achievements = [
-  {
-    icon: "🥈",
-    title: "1st Rank in Class — Silver Medal",
-    description: "Secured 1st rank in my class during 1st year of college and was awarded the Silver Medal for academic excellence.",
-  },
-  {
-    icon: "🏆",
-    title: "850+ LeetCode Problems",
-    description:
-      "Solved 850+ DSA problems in C++, consistently improving problem-solving and algorithmic thinking.",
-  },
-  {
-    icon: "⭐",
-    title: "3-Star HackerRank",
-    description:
-      "Achieved 3-star rating on HackerRank in problem solving and C++ domains.",
-  },
-  {
-    icon: "🧠",
-    title: "ML Intern — Unified Mentor",
-    description:
-      "Built an ASL Detection Model using Python, Scikit-Learn, Flask & Pandas during a 3-month internship.",
-  },
-  {
-    icon: "🔬",
-    title: "ML Intern — SmartEd",
-    description:
-      "Developed a Disease Prediction Model with Flask backend and scikit-learn classification algorithms.",
-  },
-  {
-    icon: "💻",
-    title: "Frontend Developer — Internpe",
-    description:
-      "Built a Smart Calculator with Web Speech Recognition as part of a frontend development internship.",
-  },
-  {
-    icon: "🎮",
-    title: "Web Game Developer",
-    description:
-      "Designed and shipped multiple web games including Snake Game, multiplayer Bull Cows, and Stickman Adventure.",
-  },
-];
+import RevealHeading from "./RevealHeading";
+import { achievements } from "../../lib/data/achievements";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -56,23 +14,20 @@ const fadeUp = {
 
 export default function Achievements() {
   return (
-    <section id="achievements" className="section-padding">
+    <section id="achievements" className="section-padding section-tone-a">
       <div className="container-main">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+        <RevealHeading
+          eyebrow="( 03 ) — Milestones"
+          text="Achievements &"
+          accent="Certifications"
           style={{
-            fontFamily: "var(--font-sora), sans-serif",
+            fontFamily: "var(--font-serif), sans-serif",
             fontSize: "clamp(2rem, 4vw, 2.75rem)",
             fontWeight: 700,
             letterSpacing: "-0.02em",
             marginBottom: 16,
           }}
-        >
-          Achievements & <span className="gradient-text">Certifications</span>
-        </motion.h2>
+        />
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -89,13 +44,20 @@ export default function Achievements() {
           Milestones, certifications, and experiences that shaped my journey.
         </motion.p>
 
+        <div className="eyebrow" style={{ marginBottom: 0 }}>
+          Scroll sideways →
+        </div>
+
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            display: "flex",
             gap: 16,
+            overflowX: "auto",
+            padding: "24px 4px 24px",
+            scrollSnapType: "x mandatory",
+            marginTop: 12,
           }}
-          className="achievements-grid"
+          className="achievements-strip"
         >
           {achievements.map((item, i) => (
             <motion.div
@@ -111,12 +73,16 @@ export default function Achievements() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 12,
+                minWidth: 260,
+                maxWidth: 260,
+                flexShrink: 0,
+                scrollSnapAlign: "start",
               }}
             >
               <span style={{ fontSize: "1.75rem" }}>{item.icon}</span>
               <h3
                 style={{
-                  fontFamily: "var(--font-sora), sans-serif",
+                  fontFamily: "var(--font-serif), sans-serif",
                   fontSize: "1rem",
                   fontWeight: 600,
                   color: "var(--text-primary)",
@@ -139,15 +105,16 @@ export default function Achievements() {
       </div>
 
       <style jsx global>{`
-        @media (max-width: 900px) {
-          .achievements-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+        .achievements-strip {
+          scrollbar-width: thin;
+          scrollbar-color: var(--border) transparent;
         }
-        @media (max-width: 600px) {
-          .achievements-grid {
-            grid-template-columns: 1fr !important;
-          }
+        .achievements-strip::-webkit-scrollbar {
+          height: 6px;
+        }
+        .achievements-strip::-webkit-scrollbar-thumb {
+          background: var(--border);
+          border-radius: var(--radius-full);
         }
       `}</style>
     </section>

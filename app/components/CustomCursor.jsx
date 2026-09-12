@@ -1,14 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { usePrefersReducedMotion } from "../../lib/hooks/usePrefersReducedMotion";
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
     // Detect touch device
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     setIsTouchDevice(isTouch);
@@ -48,9 +51,9 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       observer.disconnect();
     };
-  }, [isVisible]);
+  }, [isVisible, prefersReducedMotion]);
 
-  if (isTouchDevice) return null;
+  if (isTouchDevice || prefersReducedMotion) return null;
 
   return (
     <>

@@ -1,14 +1,33 @@
 // app/layout.jsx
 "use client"; // Ab is file me hum custom hook use karenge
-import { Sora, Inter } from "next/font/google";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { useState, useEffect } from "react"; // <-- Import karo
-import Script from "next/script"; 
+import Script from "next/script";
+import dynamic from "next/dynamic";
 import LenisWrapper from "./components/LenisWrapper";
 import SnakeGame from "./components/SnakeGame"; // <-- Import SnakeGame
+import { usePrefersReducedMotion } from "../lib/hooks/usePrefersReducedMotion";
 import "./globals.css";
 
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
+const PhysicsPlayground = dynamic(() => import("./components/PhysicsPlayground"), {
+  ssr: false,
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
+});
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500"],
+});
 
 // Metadata definition (Is file ke end me move karega kyunki ab ye file 'use client' hai)
 const siteMetadata = {
@@ -20,32 +39,40 @@ const siteMetadata = {
 export default function RootLayout({ children }) {
   // Easter Egg (Game Trigger) logic
   const [showGame, setShowGame] = useState(false);
+  const [showPhysics, setShowPhysics] = useState(false);
   const [inputBuffer, setInputBuffer] = useState("");
   const secretCode = "game"; // Ye word type karna hai
+  const secretCode2 = "toy"; // Matter.js physics playground
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    const maxLen = Math.max(secretCode.length, secretCode2.length);
     const handleKeyDetection = (e) => {
       // Input capture logic
-      const newInputBuffer = (inputBuffer + e.key.toLowerCase()).slice(-secretCode.length);
+      const newInputBuffer = (inputBuffer + e.key.toLowerCase()).slice(-maxLen);
       setInputBuffer(newInputBuffer);
 
-      if (newInputBuffer === secretCode) {
+      if (newInputBuffer.endsWith(secretCode)) {
         setShowGame(true);
-        setInputBuffer(""); // Buffer reset
+        setInputBuffer("");
+      } else if (!prefersReducedMotion && newInputBuffer.endsWith(secretCode2)) {
+        setShowPhysics(true);
+        setInputBuffer("");
       }
 
       // Escape key to close
-      if(e.key === "Escape"){
+      if (e.key === "Escape") {
         setShowGame(false);
+        setShowPhysics(false);
       }
     };
 
     window.addEventListener("keydown", handleKeyDetection);
     return () => window.removeEventListener("keydown", handleKeyDetection);
-  }, [inputBuffer]);
+  }, [inputBuffer, prefersReducedMotion]);
 
   useEffect(() => {
-    if (showGame) {
+    if (showGame || showPhysics) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -53,16 +80,20 @@ export default function RootLayout({ children }) {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [showGame]);
+  }, [showGame, showPhysics]);
 
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
         <title>{siteMetadata.title}</title>
         <meta name="description" content={siteMetadata.description} />
         <link rel="icon" href={siteMetadata.icons.icon} />
       </head>
       <body style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", position: 'relative' }}>
+        {/* Custom cursor tried and disabled per feedback — default cursor stays */}
         <LenisWrapper>{children}</LenisWrapper>
 
         {/* --- FLOATING GAME HINT BUTTON --- */}
@@ -125,6 +156,36 @@ export default function RootLayout({ children }) {
             >
               🐍 Play Snake Game!
             </span>
+          </button>
+        )}
+
+        {/* --- FLOATING PHYSICS TOY BUTTON --- */}
+        {!showGame && !showPhysics && !prefersReducedMotion && (
+          <button
+            onClick={() => setShowPhysics(true)}
+            aria-label="Open physics playground"
+            style={{
+              position: "fixed",
+              bottom: 24,
+              left: 84,
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #FF5A36 0%, #C7401F 100%)",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.1rem",
+              zIndex: 9998,
+              boxShadow: "0 4px 16px rgba(255, 90, 54, 0.35)",
+              transition: "transform 0.3s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.15)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            🧲
           </button>
         )}
 
@@ -213,6 +274,80 @@ export default function RootLayout({ children }) {
           </div>
         )}
         {/* --- GAME MODAL END --- */}
+
+        {/* --- PHYSICS PLAYGROUND MODAL START --- */}
+        {showPhysics && (
+          <div
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowPhysics(false);
+            }}
+            data-lenis-prevent
+            style={{
+              position: "fixed",
+              inset: 0,
+              backgroundColor: "rgba(0,0,0,0.92)",
+              zIndex: 99999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 16,
+            }}
+          >
+            <div
+              data-lenis-prevent
+              style={{
+                position: "relative",
+                backgroundColor: "#1a1a2e",
+                borderRadius: 16,
+                border: "2px solid rgba(255, 90, 54, 0.4)",
+                maxWidth: "95vw",
+                maxHeight: "92vh",
+                overflowY: "auto",
+                overflowX: "hidden",
+                boxShadow: "0 0 40px rgba(255, 90, 54, 0.15)",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <button
+                onClick={() => setShowPhysics(false)}
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  alignSelf: "flex-end",
+                  background: "rgba(26, 26, 46, 0.9)",
+                  border: "none",
+                  color: "#aaa",
+                  fontSize: "1.4rem",
+                  cursor: "pointer",
+                  padding: "8px 12px",
+                  lineHeight: 1,
+                  transition: "color 0.2s",
+                  zIndex: 2,
+                  borderRadius: "0 14px 0 8px",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#aaa")}
+              >
+                ✕
+              </button>
+              <div style={{ padding: "0 20px 20px" }}>
+                <PhysicsPlayground />
+                <div
+                  style={{
+                    textAlign: "center",
+                    color: "#555",
+                    marginTop: 8,
+                    fontSize: "0.75rem",
+                  }}
+                >
+                  Tap ✕ or press Esc to close
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* --- PHYSICS PLAYGROUND MODAL END --- */}
 
         {/* --- CHATBASE SCRIPT START --- */}
         {/* (Tumhara purana Chatbase code yahan rahega) */}

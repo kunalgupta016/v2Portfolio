@@ -1,7 +1,7 @@
 import HeroSection from "./components/HeroSection";
-import AboutSection from "./about/page";
-import ProjectsSection from "./projects/page";
-import ContactSection from "./contact/page";
+import AboutSection from "./components/AboutSection";
+import ProjectsSection from "./components/ProjectsSection";
+import ContactSection from "./components/ContactSection";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Skills from "./components/Skills";
@@ -15,8 +15,12 @@ export default function Home() {
     <>
       <LoadingScreen />
 
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+
       <Navbar />
-      <main>
+      <main id="main-content">
         <HeroSection />
         <SectionDivider />
         <AboutSection />

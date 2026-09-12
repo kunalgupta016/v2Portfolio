@@ -1,6 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import TiltCard from "../components/TiltCard";
+import TiltCard from "./TiltCard";
+import RevealHeading from "./RevealHeading";
+import { profile } from "../../lib/data/profile";
+import { experience as timeline } from "../../lib/data/experience";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -11,70 +14,23 @@ const fadeUp = {
   }),
 };
 
-const timeline = [
-  {
-    period:"July 2026 - Present",
-    title:"Quantum Engineer and Full Stack Role",
-    org:"Defence Research and Development Organisation (DRDO)",
-    detail:"Develop the website and learn the quantum computing"
-  },
-  {
-    period: "Mar 2026 - May 2026",
-    title: "Volunteer Full Stack Developer",
-    org: "Vishwashi Sangati",
-    detail:
-      "Rebuilt the organization's website from scratch with a modern, responsive design and full-stack architecture.",
-  },
-  {
-    period: "Dec 2025 - Dec 2025",
-    title: "Frontend Developer",
-    org: "Internpe",
-    detail:
-      "Built a Smart Calculator with Web Speech Recognition.",
-  },
-  {
-    period: "July 2025 - Aug 2025",
-    title: "Machine Learning Intern",
-    org: "SmartEd",
-    detail:
-      "Built a Disease Prediction Model using Python, Scikit-Learn , Flask & Pandas.",
-  },
-  {
-    period: "May 2025 - July 2025",
-    title: "Machine Learning Intern",
-    org: "Unified Mentor",
-    detail:
-      "Built a ASL Detection Model using Python, Scikit-Learn , Flask & Pandas.",
-  },
-  {
-    period: "June 2024",
-    title: "Frontend Intern",
-    org: "Bussibees",
-    detail:
-      "Developed a Flipkart Clone with responsive UI and modern web practices.",
-  },
-];
-
 export default function About() {
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding section-tone-a">
       <div className="container-main">
         {/* Section Title */}
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+        <RevealHeading
+          eyebrow="( 01 ) — Introduction"
+          text="About"
+          accent="Me"
           style={{
-            fontFamily: "var(--font-sora), sans-serif",
+            fontFamily: "var(--font-serif), sans-serif",
             fontSize: "clamp(2rem, 4vw, 2.75rem)",
             fontWeight: 700,
             letterSpacing: "-0.02em",
             marginBottom: 48,
           }}
-        >
-          About <span className="gradient-text">Me</span>
-        </motion.h2>
+        />
 
         {/* Two column layout */}
         <div
@@ -102,74 +58,23 @@ export default function About() {
       borderRadius: "var(--radius-lg)",
     }}
   >
-  <p
-    style={{
-      fontSize: "1.05rem",
-      lineHeight: 1.8,
-      color: "var(--text-secondary)",
-      marginBottom: 24,
-    }}
-  >
-    Hi! I'm{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      Kunal Gupta
-    </strong>
-    , a 3rd year Computer Science student focused on mastering{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      Data Structures & Algorithms
-    </strong>{" "}
-    and building impactful{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      Full-Stack Applications
-    </strong>
-    . I have solved{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      900+ problems on LeetCode
-    </strong>{" "}
-    using <strong style={{ color: "var(--text-primary)" }}>C++</strong>,
-    continuously sharpening my problem-solving skills and interview readiness.
-  </p>
-
-  <p
-    style={{
-      fontSize: "1.05rem",
-      lineHeight: 1.8,
-      color: "var(--text-secondary)",
-      marginBottom: 24,
-    }}
-  >
-    I develop scalable and modern web applications using{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      HTML, CSS, JavaScript, and React
-    </strong>
-    , and I'm expanding my expertise across the full stack by working on{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      Backend Development
-    </strong>{" "}
-    and real-world system design concepts. I enjoy crafting smooth user
-    experiences with{" "}
-    <strong style={{ color: "var(--text-primary)" }}>
-      Framer Motion & GSAP
-    </strong>
-    .
-  </p>
-
-  <p
-    style={{
-      fontSize: "1.05rem",
-      lineHeight: 1.8,
-      color: "var(--text-secondary)",
-      marginBottom: 32,
-    }}
-  >
-    I believe in building fewer but meaningful projects that solve real
-    problems. My goal is to grow into a high-impact software engineer who
-    designs scalable systems and delivers production-ready solutions.
-  </p>
+  {profile.bio.map((paragraph, i) => (
+    <p
+      key={i}
+      style={{
+        fontSize: "1.05rem",
+        lineHeight: 1.8,
+        color: "var(--text-secondary)",
+        marginBottom: i === profile.bio.length - 1 ? 32 : 24,
+      }}
+    >
+      {paragraph}
+    </p>
+  ))}
 
   {/* Resume Button */}
   <a
-    href="https://drive.google.com/file/d/1AVS0p6F7nujGk33QZ74OzobBDPCuXg-y/view"
+    href={profile.resumeUrl}
     target="_blank"
     rel="noopener noreferrer"
     style={{
@@ -218,7 +123,7 @@ export default function About() {
             >
             <h3
               style={{
-                fontFamily: "var(--font-sora), sans-serif",
+                fontFamily: "var(--font-serif), sans-serif",
                 fontSize: "1.25rem",
                 fontWeight: 600,
                 marginBottom: 24,

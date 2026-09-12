@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { smoothScrollToHash } from "../../lib/smoothScrollTo";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -31,10 +32,10 @@ export default function Navbar() {
         left: 0,
         width: "100%",
         zIndex: 100,
-        backdropFilter: scrolled ? "blur(16px)" : "blur(8px)",
+        backdropFilter: scrolled ? "blur(16px)" : "blur(6px)",
         backgroundColor: scrolled
-          ? "rgba(10,10,11,0.85)"
-          : "rgba(10,10,11,0.4)",
+          ? "rgba(13,12,10,0.9)"
+          : "rgba(13,12,10,0.25)",
         borderBottom: scrolled
           ? "1px solid var(--border)"
           : "1px solid transparent",
@@ -52,14 +53,19 @@ export default function Navbar() {
         }}
       >
         {/* Logo */}
-        <a href="#home" style={{ textDecoration: "none" }}>
+        <a
+          href="#home"
+          onClick={(e) => smoothScrollToHash(e, "#home")}
+          style={{ textDecoration: "none" }}
+        >
           <span
             style={{
-              fontFamily: "var(--font-sora), sans-serif",
-              fontSize: "1.25rem",
-              fontWeight: 700,
+              fontFamily: "var(--font-serif), serif",
+              fontStyle: "italic",
+              fontSize: "1.4rem",
+              fontWeight: 600,
               color: "var(--text-primary)",
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.01em",
             }}
           >
             Kunal
@@ -156,7 +162,10 @@ export default function Navbar() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    setIsOpen(false);
+                    smoothScrollToHash(e, link.href);
+                  }}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
@@ -200,10 +209,14 @@ function NavLink({ href, label }) {
   return (
     <a
       href={href}
+      onClick={(e) => smoothScrollToHash(e, href)}
       style={{
         color: "var(--text-secondary)",
-        fontSize: "0.875rem",
+        fontFamily: "var(--font-mono), monospace",
+        fontSize: "0.75rem",
         fontWeight: 500,
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
         textDecoration: "none",
         position: "relative",
         padding: "4px 0",
