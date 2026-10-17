@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Skills from "./components/Skills";
 import Achievements from "./components/Achievements";
+import LeetCodeStats from "./components/LeetCodeStats";
 import SectionDivider from "./components/SectionDivider";
 import LoadingScreen from "./components/LoadingScreen";
 
@@ -28,6 +29,8 @@ export default function Home() {
         <Skills />
         <SectionDivider />
         <Achievements />
+        <SectionDivider />
+        <LeetCodeStats />
         <SectionDivider />
         <ProjectsSection />
         <SectionDivider />

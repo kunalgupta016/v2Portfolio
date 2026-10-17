@@ -1,19 +1,33 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { smoothScrollToHash } from "../../lib/smoothScrollTo";
+import { profile } from "../../lib/data/profile";
 
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
+  { label: "DSA", href: "#leetcode" },
   { label: "Projects", href: "#projects" },
+  { label: "Blogs", href: "/blogs" },
   { label: "Contact", href: "#contact" },
+  { label: "Resume", href: profile.resumeUrl, external: true },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const links = navLinks.map((link) => ({
+    ...link,
+    href:
+      pathname !== "/" && link.href.startsWith("#")
+        ? `/${link.href}`
+        : link.href,
+  }));
+  const homeHref = pathname === "/" ? "#home" : "/#home";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -54,8 +68,8 @@ export default function Navbar() {
       >
         {/* Logo */}
         <a
-          href="#home"
-          onClick={(e) => smoothScrollToHash(e, "#home")}
+          href={homeHref}
+          onClick={(e) => smoothScrollToHash(e, homeHref)}
           style={{ textDecoration: "none" }}
         >
           <span
@@ -69,7 +83,6 @@ export default function Navbar() {
             }}
           >
             Kunal
-            <span style={{ color: "var(--accent)" }}>.</span>
           </span>
         </a>
 
@@ -82,8 +95,13 @@ export default function Navbar() {
           }}
           className="desktop-nav"
         >
-          {navLinks.map((link) => (
-            <NavLink key={link.label} href={link.href} label={link.label} />
+          {links.map((link) => (
+            <NavLink
+              key={link.label}
+              href={link.href}
+              label={link.label}
+              external={link.external}
+            />
           ))}
         </div>
 
@@ -158,10 +176,12 @@ export default function Navbar() {
                 gap: 16,
               }}
             >
-              {navLinks.map((link, i) => (
+              {links.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   onClick={(e) => {
                     setIsOpen(false);
                     smoothScrollToHash(e, link.href);
@@ -205,10 +225,12 @@ export default function Navbar() {
   );
 }
 
-function NavLink({ href, label }) {
+function NavLink({ href, label, external }) {
   return (
     <a
       href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       onClick={(e) => smoothScrollToHash(e, href)}
       style={{
         color: "var(--text-secondary)",

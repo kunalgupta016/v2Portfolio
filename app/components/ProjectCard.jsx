@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import CurtainsThumbnail from "./CurtainsThumbnail";
 
@@ -186,31 +187,24 @@ export default function ProjectCard({ project, index = 0, onOpenDetails }) {
             </div>
           ) : (
             project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  fontSize: "0.85rem",
-                  color: "var(--text-muted)",
-                  fontWeight: 500,
-                  transition: "color 0.2s, gap 0.2s",
-                  width: "fit-content",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "var(--accent)";
-                  e.currentTarget.style.gap = "10px";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "var(--text-muted)";
-                  e.currentTarget.style.gap = "6px";
-                }}
-              >
-                View Project <span>→</span>
-              </a>
+              <div className="project-actions">
+                {project.caseStudy && (
+                  <Link
+                    className="project-case-study-link"
+                    href={`/projects/${project.slug}`}
+                  >
+                    Read case study <span aria-hidden="true">↗</span>
+                  </Link>
+                )}
+                <a
+                  className="project-live-link"
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View project <span aria-hidden="true">→</span>
+                </a>
+              </div>
             )
           )}
         </div>

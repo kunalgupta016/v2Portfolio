@@ -17,7 +17,7 @@ export default function Achievements() {
     <section id="achievements" className="section-padding section-tone-a">
       <div className="container-main">
         <RevealHeading
-          eyebrow="( 03 ) — Milestones"
+          eyebrow="( 04 ) — Milestones"
           text="Achievements &"
           accent="Certifications"
           style={{

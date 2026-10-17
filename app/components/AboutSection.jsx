@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import TiltCard from "./TiltCard";
 import RevealHeading from "./RevealHeading";
+import ResumeQR from "./ResumeQR";
 import { profile } from "../../lib/data/profile";
 import { experience as timeline } from "../../lib/data/experience";
 
@@ -72,34 +73,7 @@ export default function About() {
     </p>
   ))}
 
-  {/* Resume Button */}
-  <a
-    href={profile.resumeUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 24px",
-      borderRadius: "var(--radius-full)",
-      border: "1px solid var(--border)",
-      color: "var(--text-primary)",
-      fontWeight: 500,
-      fontSize: "0.9rem",
-      transition: "all 0.3s ease",
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.borderColor = "var(--accent)";
-      e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)";
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.borderColor = "var(--border)";
-      e.currentTarget.style.boxShadow = "none";
-    }}
-  >
-    📄 View Resume
-  </a>
+  
   </TiltCard>
 </motion.div>
 
@@ -213,6 +187,9 @@ export default function About() {
             </TiltCard>
           </motion.div>
         </div>
+
+        {/* ── Resume QR Code Block ── */}
+        <ResumeQR />
       </div>
 
       <style jsx global>{`

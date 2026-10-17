@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 
@@ -180,27 +181,48 @@ export default function ProjectModal({ project, onClose }) {
             </span>
           </div>
         ) : (
-          project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "10px 22px",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "var(--accent)",
-                color: "#0A0A0B",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                width: "fit-content",
-              }}
-            >
-              Visit Live Site →
-            </a>
-          )
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            {project.caseStudy && (
+              <Link
+                href={`/projects/${project.slug}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 22px",
+                  borderRadius: "var(--radius-full)",
+                  border: "1px solid var(--border)",
+                  color: "var(--text-primary)",
+                  fontWeight: 600,
+                  fontSize: "0.9rem",
+                  width: "fit-content",
+                }}
+              >
+                Read Case Study →
+              </Link>
+            )}
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 22px",
+                  borderRadius: "var(--radius-full)",
+                  backgroundColor: "var(--accent)",
+                  color: "#0A0A0B",
+                  fontWeight: 600,
+                  fontSize: "0.9rem",
+                  width: "fit-content",
+                }}
+              >
+                Visit Live Site →
+              </a>
+            )}
+          </div>
         )}
       </motion.div>
 

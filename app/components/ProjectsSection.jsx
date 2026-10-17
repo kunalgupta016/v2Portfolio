@@ -20,8 +20,8 @@ export default function Projects() {
     <section id="projects" className="section-padding section-tone-b">
       <div className="container-main">
         <RevealHeading
-          eyebrow="( 04 ) — Selected Work"
-          text="My"
+          eyebrow="( 05 ) — Selected Work"
+          text="My Projects"
           accent="Projects"
           style={{
             fontFamily: "var(--font-serif), sans-serif",

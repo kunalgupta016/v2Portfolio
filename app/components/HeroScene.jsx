@@ -177,13 +177,10 @@ export default function HeroScene() {
 
     let frameId;
     let paused = false;
-    const clock = new THREE.Clock();
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
       if (paused) return;
-      const delta = clock.getDelta();
-      points.rotation.y += delta * 0.04;
       renderer.render(scene, camera);
     };
     animate();
